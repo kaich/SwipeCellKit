@@ -18,6 +18,8 @@ open class SwipeTableViewCell: UITableViewCell {
     /// The object that acts as the delegate of the `SwipeTableViewCell`.
     public weak var delegate: SwipeTableViewCellDelegate?
     
+    public var swipeBeginOffsetX: CGFloat = 30
+    
     var state = SwipeState.center
     var actionsView: SwipeActionsView?
     var scrollView: UIScrollView? {
@@ -223,5 +225,14 @@ extension SwipeTableViewCell: SwipeControllerDelegate {
     
     func swipeController(_ controller: SwipeController, didDeleteSwipeableAt indexPath: IndexPath) {
         tableView?.deleteRows(at: [indexPath], with: .none)
+    }
+    
+    open override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        let touchLocation = touch.location(in: touch.window)
+        if gestureRecognizer.isKind(of: UIPanGestureRecognizer.self) && touchLocation.x < swipeBeginOffsetX {
+            return false
+        } else {
+            return true
+        }
     }
 }
