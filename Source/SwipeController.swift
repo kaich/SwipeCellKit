@@ -27,6 +27,8 @@ protocol SwipeControllerDelegate: class {
 
 class SwipeController: NSObject {
     
+    var swipeBeginOffsetX: CGFloat = 30
+    
     weak var swipeable: (UIView & Swipeable)?
     weak var actionsContainerView: UIView?
     
@@ -365,6 +367,15 @@ extension SwipeController: UIGestureRecognizerDelegate {
         }
         
         return true
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        let touchLocation = touch.location(in: touch.window)
+        if gestureRecognizer.isKind(of: UIPanGestureRecognizer.self) && touchLocation.x < swipeBeginOffsetX {
+            return false
+        } else {
+            return true
+        }
     }
 }
 
