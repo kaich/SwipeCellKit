@@ -28,7 +28,7 @@ protocol SwipeControllerDelegate: class {
 
 class SwipeController: NSObject {
     
-    var swipeBeginOffsetX: CGFloat = 30
+    var swipeBeginOffsetX: CGFloat = 50
     
     weak var swipeable: (UIView & Swipeable)?
     weak var actionsContainerView: UIView?
